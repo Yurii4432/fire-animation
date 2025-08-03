@@ -2,16 +2,21 @@
 <html>
 <head>
   <style>
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
       background: black;
       overflow: hidden;
+      height: 100%;
     }
+
     .fire {
       position: absolute;
       font-size: 2rem;
       animation: rise 3s ease-in forwards;
+      pointer-events: none;
     }
+
     @keyframes rise {
       0% {
         bottom: 0;
@@ -25,8 +30,8 @@
       }
     }
 
-    /* Fade-out overlay */
-    #fade {
+    /* Black overlay for fade out */
+    .fade-overlay {
       position: fixed;
       top: 0;
       left: 0;
@@ -34,15 +39,15 @@
       height: 100vh;
       background: black;
       opacity: 0;
+      z-index: 100;
       pointer-events: none;
       transition: opacity 2s ease-in;
-      z-index: 10;
     }
   </style>
 </head>
 <body>
   <div id="fire-container"></div>
-  <div id="fade"></div>
+  <div class="fade-overlay" id="fade"></div>
 
   <script>
     const container = document.getElementById("fire-container");
@@ -55,16 +60,16 @@
       fire.style.bottom = "0px";
       fire.innerText = "🔥";
       container.appendChild(fire);
-      setTimeout(() => fire.remove(), 3000);
+      setTimeout(() => fire.remove(), 3000); // fire fades away naturally
     }
 
-    // Start creating fire every 200ms
+    // Start spawning fire
     const fireInterval = setInterval(createFire, 200);
 
-    // After 3 seconds: stop fire, then fade
+    // After 3 seconds: stop creating and fade screen to black
     setTimeout(() => {
-      clearInterval(fireInterval);       // Stop creating fire
-      fade.style.opacity = "1";          // Fade to black
+      clearInterval(fireInterval);        // stop creating fire
+      fade.style.opacity = "1";           // fade overlay in over 2 seconds
     }, 3000);
   </script>
 </body>
