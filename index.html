@@ -28,7 +28,11 @@
 </head>
 <body>
   <script>
+    let fireActive = true;
+
     function createFire() {
+      if (!fireActive) return;
+
       const fire = document.createElement("div");
       fire.className = "fire";
       fire.style.left = Math.random() * window.innerWidth + "px";
@@ -38,12 +42,15 @@
       setTimeout(() => fire.remove(), 3000);
     }
 
-    // Start spawning fire emojis every 0.2 seconds
+    // Spawn fire every 200ms
     const fireInterval = setInterval(createFire, 200);
 
-    // Stop after 5 seconds
-    setTimeout(() => clearInterval(fireInterval), 5000);
+    // After 5 seconds: stop spawning AND remove all
+    setTimeout(() => {
+      fireActive = false; // stop future spawns
+      clearInterval(fireInterval); // just in case
+      document.querySelectorAll('.fire').forEach(el => el.remove()); // clear all fire
+    }, 5000);
   </script>
 </body>
 </html>
-
