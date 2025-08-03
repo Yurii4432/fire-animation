@@ -3,20 +3,15 @@
 <head>
   <style>
     html, body {
-      margin: 0;
-      padding: 0;
-      background: black;
-      overflow: hidden;
-      height: 100%;
+      margin: 0; padding: 0; height: 100%; overflow: hidden; background: black;
     }
-
     .fire {
       position: absolute;
       font-size: 2rem;
       animation: rise 3s ease-in forwards;
       pointer-events: none;
+      user-select: none;
     }
-
     @keyframes rise {
       0% {
         bottom: 0;
@@ -29,47 +24,50 @@
         transform: translateX(-50px);
       }
     }
-
-    /* Black overlay for fade out */
-    .fade-overlay {
+    #fade {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
       background: black;
       opacity: 0;
-      z-index: 100;
       pointer-events: none;
+      user-select: none;
       transition: opacity 2s ease-in;
+      z-index: 9999;
+      visibility: hidden;
+    }
+    #fade.visible {
+      opacity: 1;
+      visibility: visible;
     }
   </style>
 </head>
 <body>
   <div id="fire-container"></div>
-  <div class="fade-overlay" id="fade"></div>
+  <div id="fade"></div>
 
   <script>
-    const container = document.getElementById("fire-container");
-    const fade = document.getElementById("fade");
+    const container = document.getElementById('fire-container');
+    const fade = document.getElementById('fade');
 
     function createFire() {
-      const fire = document.createElement("div");
-      fire.className = "fire";
-      fire.style.left = Math.random() * window.innerWidth + "px";
-      fire.style.bottom = "0px";
-      fire.innerText = "🔥";
+      const fire = document.createElement('div');
+      fire.className = 'fire';
+      fire.style.left = Math.random() * window.innerWidth + 'px';
+      fire.style.bottom = '0px';
+      fire.innerText = '🔥';
       container.appendChild(fire);
-      setTimeout(() => fire.remove(), 3000); // fire fades away naturally
+      setTimeout(() => fire.remove(), 3000);
     }
 
-    // Start spawning fire
+    // Spawn fire emojis every 200ms
     const fireInterval = setInterval(createFire, 200);
 
-    // After 3 seconds: stop creating and fade screen to black
+    // After 3 seconds, stop spawning and fade out
     setTimeout(() => {
-      clearInterval(fireInterval);        // stop creating fire
-      fade.style.opacity = "1";           // fade overlay in over 2 seconds
+      clearInterval(fireInterval);
+      // Show fade overlay by adding 'visible' class
+      fade.classList.add('visible');
     }, 3000);
   </script>
 </body>
