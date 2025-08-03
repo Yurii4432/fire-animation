@@ -1,74 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    html, body {
-      margin: 0; padding: 0; height: 100%; overflow: hidden; background: black;
-    }
-    .fire {
-      position: absolute;
-      font-size: 2rem;
-      animation: rise 3s ease-in forwards;
-      pointer-events: none;
-      user-select: none;
-    }
-    @keyframes rise {
-      0% {
-        bottom: 0;
-        opacity: 1;
-        transform: translateX(0);
-      }
-      100% {
-        bottom: 100vh;
-        opacity: 0;
-        transform: translateX(-50px);
-      }
-    }
-    #fade {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: black;
-      opacity: 0;
-      pointer-events: none;
-      user-select: none;
-      transition: opacity 2s ease-in;
-      z-index: 9999;
-      visibility: hidden;
-    }
-    #fade.visible {
+<style>
+  /* Make sure background stays transparent */
+  body, html {
+    background: transparent !important;
+    margin: 0;
+    overflow: visible !important;
+  }
+
+  .fire {
+    position: fixed;
+    font-size: 2rem;
+    animation: rise 3s ease-in forwards;
+    pointer-events: none;
+    user-select: none;
+    color: orange; /* optional for better fire look */
+    text-shadow: 0 0 5px #ff4500;
+  }
+
+  @keyframes rise {
+    0% {
+      bottom: 0;
       opacity: 1;
-      visibility: visible;
+      transform: translateX(0);
     }
-  </style>
-</head>
-<body>
-  <div id="fire-container"></div>
-  <div id="fade"></div>
-
-  <script>
-    const container = document.getElementById('fire-container');
-    const fade = document.getElementById('fade');
-
-    function createFire() {
-      const fire = document.createElement('div');
-      fire.className = 'fire';
-      fire.style.left = Math.random() * window.innerWidth + 'px';
-      fire.style.bottom = '0px';
-      fire.innerText = '🔥';
-      container.appendChild(fire);
-      setTimeout(() => fire.remove(), 3000);
+    100% {
+      bottom: 100vh;
+      opacity: 0;
+      transform: translateX(-50px);
     }
+  }
+</style>
 
-    // Spawn fire emojis every 200ms
-    const fireInterval = setInterval(createFire, 200);
+<script>
+  function createFire() {
+    const fire = document.createElement("div");
+    fire.className = "fire";
+    fire.style.left = Math.random() * window.innerWidth + "px";
+    fire.style.bottom = "0px";
+    fire.innerText = "🔥";
+    document.body.appendChild(fire);
+    setTimeout(() => fire.remove(), 3000);
+  }
 
-    // After 3 seconds, stop spawning and fade out
-    setTimeout(() => {
-      clearInterval(fireInterval);
-      // Show fade overlay by adding 'visible' class
-      fade.classList.add('visible');
-    }, 3000);
-  </script>
-</body>
-</html>
+  const fireInterval = setInterval(createFire, 200);
+
+  // Stop spawning fire after 3 seconds
+  setTimeout(() => clearInterval(fireInterval), 3000);
+</script>
