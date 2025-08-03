@@ -38,7 +38,12 @@
       setTimeout(() => fire.remove(), 3000);
     }
 
-    setInterval(createFire, 200);
+    // Start spawning fire emojis every 0.2 seconds
+    const fireInterval = setInterval(createFire, 200);
+
+    // Stop after 5 seconds
+    setTimeout(() => clearInterval(fireInterval), 5000);
   </script>
 </body>
 </html>
+
