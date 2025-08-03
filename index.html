@@ -24,13 +24,29 @@
         transform: translateX(-50px);
       }
     }
+
+    /* Fade-out overlay */
+    #fade {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 2s ease-in;
+      z-index: 10;
+    }
   </style>
 </head>
 <body>
   <div id="fire-container"></div>
+  <div id="fade"></div>
 
   <script>
     const container = document.getElementById("fire-container");
+    const fade = document.getElementById("fade");
 
     function createFire() {
       const fire = document.createElement("div");
@@ -39,16 +55,17 @@
       fire.style.bottom = "0px";
       fire.innerText = "🔥";
       container.appendChild(fire);
+      setTimeout(() => fire.remove(), 3000);
     }
 
     // Start creating fire every 200ms
     const fireInterval = setInterval(createFire, 200);
 
-    // After 3 seconds: stop fire AND remove everything
+    // After 3 seconds: stop fire, then fade
     setTimeout(() => {
-      clearInterval(fireInterval);                      // Stop creating
-      container.innerHTML = "";                         // Remove all fires
-    }, 3000); // ← 3 seconds here
+      clearInterval(fireInterval);       // Stop creating fire
+      fade.style.opacity = "1";          // Fade to black
+    }, 3000);
   </script>
 </body>
 </html>
