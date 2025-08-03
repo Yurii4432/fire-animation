@@ -44,11 +44,11 @@
     // Start creating fire every 200ms
     const fireInterval = setInterval(createFire, 200);
 
-    // After 5 seconds: stop fire AND remove everything
+    // After 3 seconds: stop fire AND remove everything
     setTimeout(() => {
       clearInterval(fireInterval);                      // Stop creating
       container.innerHTML = "";                         // Remove all fires
-    }, 5000);
+    }, 3000); // ← 3 seconds here
   </script>
 </body>
 </html>
